@@ -65,7 +65,7 @@ class Container implements \ArrayAccess, \Countable, \IteratorAggregate, \Psr\Co
      */
     public function __get($id)
     {
-        if (isset($this->container[strtolower($id)])) {
+        if (!isset($this->container[strtolower($id)])) {
             throw new \OtherCode\Exceptions\NotFoundException(sprintf('No entries found with id "%s".', $id));
         }
 

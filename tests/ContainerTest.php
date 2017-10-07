@@ -13,6 +13,9 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
         ));
 
         $this->assertTrue($container->has('api'));
+        $this->assertTrue($container->has('std'));
+        $this->assertInstanceOf('\stdClass', $container->get('std'));
+        $this->assertEquals($std, $container->get('std'));
 
     }
 }
