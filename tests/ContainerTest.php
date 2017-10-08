@@ -20,6 +20,8 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($std, $container->get('std'));
 
         $this->assertCount(2, $container);
+
+        $this->assertEquals(array('api', 'std'), $container->keys());
     }
 
     public function testSetAndGet()
@@ -43,6 +45,18 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue($container->has('four'));
         $this->assertEquals(4, $container->get('four'));
+
+        $this->assertTrue($container->has('one'));
+        $this->assertEquals(1, $container['one']);
+
+        $this->assertTrue($container->has('two'));
+        $this->assertEquals(2, $container['two']);
+
+        $this->assertTrue($container->has('three'));
+        $this->assertEquals(3, $container['three']);
+
+        $this->assertTrue($container->has('four'));
+        $this->assertEquals(4, $container['four']);
     }
 
     /**
@@ -52,5 +66,22 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     {
         $container = new \OtherCode\Container\Container();
         $container->get('notfound');
+    }
+
+    public function testArrayIterator()
+    {
+        $container = new \OtherCode\Container\Container();
+        $this->assertInstanceOf('\ArrayIterator', $container->getIterator());
+    }
+
+    public function testExitsUnset()
+    {
+        $container = new \OtherCode\Container\Container();
+        $container['key'] = 'value';
+
+        $this->assertTrue($container->offsetExists('key'));
+        $container->offsetUnset('key');
+        $this->assertNotTrue($container->offsetExists('key'));
+
     }
 }
