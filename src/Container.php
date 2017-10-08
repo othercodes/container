@@ -37,6 +37,15 @@ class Container implements \ArrayAccess, \Countable, \IteratorAggregate, \Psr\Co
     }
 
     /**
+     * Return the list of keys
+     * @return array
+     */
+    public function keys()
+    {
+        return array_keys($this->container);
+    }
+
+    /**
      * Return the required value with the given id
      * @param $id
      * @return mixed|null
@@ -66,7 +75,7 @@ class Container implements \ArrayAccess, \Countable, \IteratorAggregate, \Psr\Co
     public function __get($id)
     {
         if (!isset($this->container[strtolower($id)])) {
-            throw new \OtherCode\Exceptions\NotFoundException(sprintf('No entries found with id "%s".', $id));
+            throw new \OtherCode\Container\Exceptions\NotFoundException(sprintf('No entries found with id "%s".', $id));
         }
 
         return $this->container[strtolower($id)];
@@ -74,16 +83,12 @@ class Container implements \ArrayAccess, \Countable, \IteratorAggregate, \Psr\Co
 
     /**
      * Set value with a id
-     * @param $id
-     * @param $value
+     * @param string $id
+     * @param mixed $value
      */
     public function __set($id, $value)
     {
-        if (is_null($id)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[strtolower($id)] = $value;
-        }
+        $this->container[strtolower($id)] = $value;
     }
 
     /**

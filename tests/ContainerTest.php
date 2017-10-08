@@ -22,7 +22,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(2, $container);
     }
 
-    public function testSet()
+    public function testSetAndGet()
     {
         $container = new \OtherCode\Container\Container();
         $container->set('one', 1);
@@ -43,7 +43,14 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue($container->has('four'));
         $this->assertEquals(4, $container->get('four'));
+    }
 
-
+    /**
+     * @expectedException \OtherCode\Container\Exceptions\NotFoundException
+     */
+    public function testGetNotFoundException()
+    {
+        $container = new \OtherCode\Container\Container();
+        $container->get('notfound');
     }
 }
